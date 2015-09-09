@@ -1,3 +1,4 @@
+# This is the Dockefile to build GUIdock (kristiyanto/guidock)
 # Base Docker Image
 FROM bioconductor/release_base
 
@@ -16,8 +17,12 @@ ADD http://chianti.ucsd.edu/cytoscape-3.2.1/cytoscape-3.2.1.tar.gz /root/cytosca
 RUN tar -zxvf cytoscape-3.2.1.tar.gz 
 RUN rm /root/cytoscape-3.2.1.tar.gz
 
+# Install Cytoscape Apps / Plugin
+ADD PACKAGE/CyNetworkBMA-1.0.0_1.jar /root/CytoscapeConfiguration/3/apps/installed/CyNetworkBMA-1.0.0_1.jar
+
 # Dummy data for Demo
-ADD http://webdatascience.github.io/CyNetworkBMA/timeSeries.txt /root/timeSeries.txt
+# Demo contains Cytoscape session and dummy data for Dream4, Yeast, and RNASeq
+ADD DEMO/ /root/DEMO/
 
 # Install required R Packages
 RUN echo 'install.packages(c("Rserve", "igraph"), repos="http://cran.us.r-project.org", dependencies=TRUE)' > /tmp/packages.R \     && Rscript /tmp/packages.R
@@ -31,6 +36,8 @@ RUN echo 'Rserve()' >> /root/rserve.R
 # Build a Script to start run Rserve and Launch Cytoscape
 RUN echo 'Rscript /root/rserve.R' > /root/start.sh
 RUN echo '/root/cytoscape-unix-3.2.1/cytoscape.sh' >> /root/start.sh
+
+
 
 # Run Script on entrance
 CMD sh /root/start.sh
