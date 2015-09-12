@@ -25,4 +25,5 @@ socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\" &
 echo "Launching XQuartz"
 open -a xquartz &
 eval $(docker-machine env $DockerMachine)
+docker pull $DockerImage
 docker run -ti -e DISPLAY=$MacIP:0 $DockerImage
