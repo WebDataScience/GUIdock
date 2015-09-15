@@ -7,9 +7,15 @@ A tutorial to get it run on Windows and Mac are available:
 https://www.youtube.com/watch?v=FXOU2EZ4szI (Mac)
 https://www.youtube.com/watch?v=Y1Ye5mOMBW0 (Windows)
 
+# Linux
+## Install and Run
+Download and run runGUIdockLinux.sh from installation folder.
+Usage:
+	sh runGUIdockLinux.sh
+
 
 # OSX 
-## INSTALL
+## Install
 Docker Toolbox needs to be downloaded and installed manually from the website.
 https://www.docker.com/toolbox
 
@@ -19,7 +25,7 @@ Usage
 	sh install-mac.sh
 
 
-## RUN GUIdock
+## Run GUIdock
 To Run GUIdock, download and run start-mac.sh from Installation folder
 Usage
 	sh start-mac.sh
@@ -27,11 +33,11 @@ Usage
 
 # WINDOWS
 
-## INSTALL
+## Install
 Download and install Docker Toolbox from: https://www.docker.com/toolbox
 Download and install MobaXterm from: http://mobaxterm.mobatek.net/
 
-## RUN 
+## Run GUIdock 
 Download RunGUIdock.sh and startMoba.bat from Installation folder.
 Execute RunGUIdock.sh by double-click 
 or by running from Windows Powershell:
