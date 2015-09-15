@@ -4,10 +4,11 @@ echo " ***** Docker will need to be downloaded and installed from Docker Website
 # Install Home Brew 
 echo "Installing Homebrew"
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew update
 
 # With home brew installed, install xquartz
-echo "Installing xquartz"
-brew install xquartz
+echo "Installing XQuartz"
+brew install Caskroom/cask/xquartz
 
 # With home brew installed, install socat
 echo "Installing Socat"
