@@ -1,5 +1,5 @@
 #!/bin/bash
-#version 091515
+#version 091515b
 #Hong Hung 9-15 15
 #variables
 
@@ -11,7 +11,7 @@ if (!(type $SERVICE >/dev/null 2>&1))
  then
   echo "$SERVICE not installed"
   echo "attempting to install docker"
-  sudo curl -sSL https://get.docker.com/ | sh
+  sudo wget -qO- https://get.docker.com/ | sh
   if (!(type $SERVICE >/dev/null 2>&1))
    then
     echo "unable to install docker"
