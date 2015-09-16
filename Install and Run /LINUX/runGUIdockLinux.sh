@@ -1,24 +1,27 @@
 #!/bin/bash
-
+#version 091515
+#Hong Hung 9-15 15
 #variables
-DOCKERBIN=/bin/docker
+
 SERVICE=docker
 IMAGE=kristiyanto/guidock
-INSTALL=sudo yum -y
 
 #check if docker has been installed
-if [ ! -f  $DOCKERBIN ]
+if (!(type $SERVICE >/dev/null 2>&1))
  then
-  echo "$DOCKERBIN not installed"
+  echo "$SERVICE not installed"
   echo "attempting to install docker"
   sudo curl -sSL https://get.docker.com/ | sh
-  if [ ! -f  $DOCKERBIN ]
+  if (!(type $SERVICE >/dev/null 2>&1))
    then
     echo "unable to install docker"
     exit 0
+   else
+    DOCKERBIN=`which $SERVICE`
   fi
   echo "$DOCKERBIN successfully installed"
  else
+  DOCKERBIN=`which $SERVICE`
   echo "$DOCKERBIN installed"
 fi 
 
