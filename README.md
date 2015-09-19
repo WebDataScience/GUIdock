@@ -1,4 +1,4 @@
-<center><img src=logo.png border=none/></center>
+<center><img src="logo.png" alt="GUIdock logo" border=none/></center>
 
 
 # Docker-Bioconductor-Cytoscape
