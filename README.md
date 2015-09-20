@@ -8,15 +8,18 @@ Source code, installation and running script, and Dockerfile available at:<br/>
 https://github.com/WebDataScience/GUIdock
 
 The package contains: Cytoscape, R, with Bioconductor packages (igraph, Rserve, and networkBMA). 
-A tutorial to get it run on Windows and Mac are available:<br/>
-https://www.youtube.com/watch?v=FXOU2EZ4szI (Mac)<br/>
-https://www.youtube.com/watch?v=Y1Ye5mOMBW0 (Windows)
+
+Demonstration video (for Linux, Mac, and Windows)
+https://www.youtube.com/watch?v=k1WkIx0EENo
+
 
 # Linux
 ## Install and Run
 Download and run runGUIdockLinux.sh from installation folder.<br/>
 Usage:<br/>
 	sh runGUIdockLinux.sh
+
+Instructional Video: https://www.youtube.com/watch?v=HOtI1Eg2J1Q
 
 
 # OSX 
@@ -28,6 +31,8 @@ In addition to Docker Toolbox, GUIdock requires Socat and XQuartz.
 Download and run install-mac.sh from Installation folder.<br/>
 Usage:<br/>
 	sh install-mac.sh
+
+Instructional Video: https://www.youtube.com/watch?v=4Qg0fCDOxhY
 
 
 ## Run GUIdock
@@ -41,6 +46,8 @@ Usage:<br/>
 ## Install
 Download and install Docker Toolbox from: https://www.docker.com/toolbox<br/>
 Download and install MobaXterm from: http://mobaxterm.mobatek.net/
+
+Instructional Video: https://www.youtube.com/watch?v=cA7HVCB064I
 
 ## Run GUIdock 
 Download RunGUIdock.sh and startMoba.bat from Installation folder.<br/>
