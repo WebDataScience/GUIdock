@@ -8,7 +8,7 @@
       ["install", "python-pip python-dev build-essential"],
       ["install", "mesa-utils libgl1-mesa-dri"],
       ["add", "web /web/"],
-      "RUN pip install -r /web/requirements.txt",
+      "pip install -r /web/requirements.txt",
       ["purge", "python-pip python-dev build-essential"],
       ["add", "noVNC /noVNC/"],
       ["add", "nginx.conf /etc/nginx/sites-enabled/default"],
@@ -23,6 +23,6 @@
       "/root/"
    ],
    "entrypoint": [
-      "/start.sh"
+      "/startup.sh"
    ]
 }

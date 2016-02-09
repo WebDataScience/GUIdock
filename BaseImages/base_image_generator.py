@@ -81,7 +81,7 @@ def load_json(json_path, dockerfile=None):
         dockerfile.append("EXPOSE %s" % " ".join(expose_ports))
     if entry_points:
         entry_point = entry_points[-1]
-        dockerfile.append("ENRTYPOINT %s" % json.dumps(entry_point))
+        dockerfile.append("ENTRYPOINT %s" % json.dumps(entry_point))
     
     dockerfile = "\n".join(dockerfile)
     return dockerfile
