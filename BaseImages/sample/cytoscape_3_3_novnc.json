@@ -1,0 +1,7 @@
+{
+   "maintainer": "Somebody <somebody@acme.com>",
+   "libs": [
+      "cytoscape_3_3",
+      "novnc"
+   ]
+}
