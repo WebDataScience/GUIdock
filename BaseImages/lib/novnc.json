@@ -1,0 +1,28 @@
+{
+   "maintainer": "Varun Mittal <varun91@uw.edu>",
+   "commands": [
+      ["install", "supervisor openssh-server pwgen sudo vim-tiny"],
+      ["install", "net-tools lxde x11vnc x11vnc-data xvfb"],
+      ["install", "gtk2-engines-murrine ttf-ubuntu-font-family"],
+      ["install", "nginx"],
+      ["install", "python-pip python-dev build-essential"],
+      ["install", "mesa-utils libgl1-mesa-dri"],
+      ["add", "web /web/"],
+      "RUN pip install -r /web/requirements.txt",
+      ["purge", "python-pip python-dev build-essential"],
+      ["add", "noVNC /noVNC/"],
+      ["add", "nginx.conf /etc/nginx/sites-enabled/default"],
+      ["add", "startup.sh /"],
+      ["add", "supervisord.conf /etc/supervisor/conf.d/"],
+      ["add", "doro-lxde-wallpapers /usr/share/doro-lxde-wallpapers/"]
+   ],
+   "expose": [
+      "6080"
+   ],
+   "workdir": [
+      "/root/"
+   ],
+   "entrypoint": [
+      "/start.sh"
+   ]
+}
