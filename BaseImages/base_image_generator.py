@@ -13,7 +13,7 @@ def process_add(command, arg, dep):
 
 command_dict = {
     "repo_update": ["RUN apt-get -y update", None],
-    "repo_add"   : ["RUN add-apt-repository -y", None],
+    "repo_add"   : ["RUN add-apt-repository -y", lambda command,arg,dep: (command,"'%s'" % arg)],
     "install"    : ["RUN apt-get install -y --force-yes --no-install-recommends", None],
     "purge"      : ["RUN apt-get purge -y --force-yes", None],
     "add"        : ["add", process_add]

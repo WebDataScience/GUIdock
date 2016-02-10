@@ -15,3 +15,5 @@ This command will use lib/cytoscape_3_3.json which has a dependency on lib/java8
  * java8.json - Base jdk8 image
  * cytoscape_3_3.json - Base cytoscape image with functional copy of software
  * novnc.json - X11 image with novnc support, should be included as last dependency, original contributor: https://github.com/fcwu/docker-ubuntu-vnc-desktop
+ * r.json - Base r image without build tools, contains NetworkBMA compiled
+ * r_dev.json - Base r image with complete toolchain, useful for installing and compiling packages, contains NetworkBMA compiled
