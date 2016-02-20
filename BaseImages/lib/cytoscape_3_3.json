@@ -2,7 +2,7 @@
    "maintainer": "Varun Mittal <varun91@uw.edu>",
    "commands": [
       ["add", "http://chianti.ucsd.edu/cytoscape-3.3.0/cytoscape-3.3.0.tar.gz /root/cytoscape-3.3.0.tar.gz"],
-      "tar -xf cytoscape-3.3.0.tar.gz",
+      "cd /root/ && tar -xf cytoscape-3.3.0.tar.gz",
       "rm /root/cytoscape-3.3.0.tar.gz"
    ],
    "env_home": "/root/",
