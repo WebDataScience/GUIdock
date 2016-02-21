@@ -7,7 +7,7 @@
    ],
    "env_home": "/root/",
    "depends": [
-      "openjdk8"
+      "openjre8"
    ]
 }
 
