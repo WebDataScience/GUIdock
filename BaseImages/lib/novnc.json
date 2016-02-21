@@ -14,8 +14,7 @@
       ["add", "nginx.conf /etc/nginx/sites-enabled/default"],
       ["add", "startup.sh /"],
       ["add", "supervisord.conf /etc/supervisor/conf.d/"],
-      ["add", "doro-lxde-wallpapers /usr/share/doro-lxde-wallpapers/"],
-      ["purge", "python-pip python-dev build-essential"]
+      ["add", "doro-lxde-wallpapers /usr/share/doro-lxde-wallpapers/"]
    ],
    "expose": [
       "6080"
