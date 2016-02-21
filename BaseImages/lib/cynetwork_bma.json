@@ -1,0 +1,11 @@
+{
+   "maintainer": "Varun Mittal <varun91@uw.edu>",
+   "commands": [
+      ["add", "CyNetworkBMA-1.0.0_1.jar /deps/CytoscapeConfiguration/3/apps/installed/CyNetworkBMA-1.0.0_1.jar"]
+   ],
+   "env_home": "/root/",
+   "depends": [
+      "cytoscape_3_3"
+   ]
+}
+
