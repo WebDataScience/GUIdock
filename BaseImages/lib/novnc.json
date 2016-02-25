@@ -1,5 +1,5 @@
 {
-   "maintainer": "Varun Mittal <varun91@uw.edu>",
+   "maintainer": ["Varun Mittal <varun91@uw.edu>"],
    "commands": [
       ["install", "supervisor openssh-server pwgen sudo vim-tiny"],
       ["install", "net-tools lxde x11vnc x11vnc-data xvfb"],

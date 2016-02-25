@@ -1,5 +1,5 @@
 {
-   "maintainer": "Varun Mittal <varun91@uw.edu>",
+   "maintainer": ["Varun Mittal <varun91@uw.edu>"],
    "commands": [
       ["repo_add", "ppa:webupd8team/java"],
       "repo_update",

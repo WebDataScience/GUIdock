@@ -1,5 +1,5 @@
 {
-   "maintainer": "Varun Mittal <varun91@uw.edu>",
+   "maintainer": ["Varun Mittal <varun91@uw.edu>"],
    "commands": [
       ["add", "http://chianti.ucsd.edu/cytoscape-3.3.0/cytoscape-3.3.0.tar.gz /deps/cytoscape-3.3.0.tar.gz"]
    ],

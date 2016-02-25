@@ -1,0 +1,9 @@
+{
+   "maintainer": ["Varun Mittal <varun91@uw.edu>"],
+   "commands": [
+       ["install", "python-django python-pymongo"]
+   ],
+   "script": "init.sh",
+   "rootdir": "/root/broker/"
+}
+

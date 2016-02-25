@@ -1,5 +1,5 @@
 {
-   "maintainer": "Varun Mittal <varun91@uw.edu>",
+   "maintainer": ["Varun Mittal <varun91@uw.edu>"],
    "commands": [
       ["install", "apt-transport-https"],
       ["repo_add", "deb https://cran.rstudio.com/bin/linux/ubuntu/ trusty/"],
