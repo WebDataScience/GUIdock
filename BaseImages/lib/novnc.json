@@ -16,6 +16,9 @@
       ["add", "supervisord.conf /etc/supervisor/conf.d/"],
       ["add", "doro-lxde-wallpapers /usr/share/doro-lxde-wallpapers/"]
    ],
+   "depends": [
+      "broker_base"
+   ],
    "expose": [
       "6080"
    ],

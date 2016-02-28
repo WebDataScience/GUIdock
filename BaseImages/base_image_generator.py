@@ -49,7 +49,13 @@ def load_dep(dep, commands=[], expose_ports=[], entry_points=[], scripts=[], env
     entry_point = json_data.get("entrypoint", [])
     if entry_point:
         entry_points.append(entry_point)
-    script = json_data.get("script")
+    try:
+        script,script_opts = json_data.get("script")
+    except ValueError:
+        script = json_data.get("script")
+        script_opts = {'remove': True}
+    except TypeError:
+        script = None
     if script:
         from uuid import uuid4
         # Generate uuid4 name for first time setup script
@@ -61,7 +67,8 @@ def load_dep(dep, commands=[], expose_ports=[], entry_points=[], scripts=[], env
         command_str = "/%s" % file_name
         scripts.append("chmod +x %s" % command_str)
         scripts.append(command_str)
-        scripts.append("rm -rf %s" % command_str)
+        if script_opts['remove']:
+            scripts.append("rm -rf %s" % command_str)
     workdir = workdir + json_data.get('workdir', [])
     contributors = contributors+json_data.get('maintainer', [])
 
