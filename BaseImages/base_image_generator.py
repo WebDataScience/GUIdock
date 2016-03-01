@@ -19,13 +19,13 @@ command_dict = {
     "add"        : ["add", process_add]
 }
 
-def load_dep(dep, commands=[], expose_ports=[], entry_points=[]):
+def load_dep(dep, commands=[], expose_ports=[], entry_points=[], scripts=[], env=[], workdir=[], contributors=[]):
     path = "lib/%s.json" % dep
     json_data = load(open(path, "rb"))
     depends   = json_data.get('depends', [])
     commands.append("#%s.json" % dep)
-    for dep in depends:
-        load_dep(dep, commands)
+    for _dep in depends:
+        load_dep(_dep, commands, scripts=scripts, env=env)
     for command in json_data['commands']:
         try:
             command,arg = command
@@ -43,21 +43,46 @@ def load_dep(dep, commands=[], expose_ports=[], entry_points=[]):
     expose = json_data.get('expose', [])
     expose_ports.extend(expose)
 
+    for _env in json_data.get("env", []):
+        env.append(_env)
+
     entry_point = json_data.get("entrypoint", [])
     if entry_point:
         entry_points.append(entry_point)
+    try:
+        script,script_opts = json_data.get("script")
+    except ValueError:
+        script = json_data.get("script")
+        script_opts = {'remove': True}
+    except TypeError:
+        script = None
+    if script:
+        from uuid import uuid4
+        # Generate uuid4 name for first time setup script
+        file_name = str(uuid4())
+        arg = "%s /%s" % (script,file_name)
+        command,arg = process_add("add", arg, dep)
+        command = "%s %s" % (command,arg)
+        commands.append(command)
+        command_str = "/%s" % file_name
+        scripts.append("chmod +x %s" % command_str)
+        scripts.append(command_str)
+        if script_opts['remove']:
+            scripts.append("rm -rf %s" % command_str)
+    workdir = workdir + json_data.get('workdir', [])
+    contributors = contributors+json_data.get('maintainer', [])
 
-    return commands,expose_ports,entry_points
+    return commands,expose_ports,entry_points,scripts,env,workdir,contributors
 
 def load_json(json_path, dockerfile=None):
     import json
     data = load(open(json_path, "rb"))
     maintainer = data.get('maintainer')
     if maintainer:
-        maintainer = "Maintainer %s" % maintainer
+        maintainer = "MAINTAINER %s" % maintainer
+    base_image = "FROM ubuntu:14.04"
     if not dockerfile:
         dockerfile = [
-            "FROM ubuntu:14.04",
             maintainer,
             "ENV DEBIAN_FRONTEND noninteractive",
             "ENV HOME /root",
@@ -68,22 +93,45 @@ def load_json(json_path, dockerfile=None):
     sub_commands = []
     expose_ports = []
     entry_points = []
+    scripts      = []
+    env          = []
+    workdir      = []
+    maintainers  = []
     for lib in data.get('libs', []):
-        sub_commands,expose_ports,entry_points = load_dep(lib)
+        sub_commands,expose_ports,entry_points,scripts,env,workdir,maintainers = load_dep(lib)
+    # Add all the maintainers collected from scripts
+
+    for maintainer in set(maintainers):
+        dockerfile = ["MAINTAINER %s" % maintainer]+dockerfile
+
     dockerfile.extend(sub_commands)
     dockerfile.extend([
         "RUN apt-get purge software-properties-common -y --force-yes",
         "RUN apt-get -y autoclean",
         "RUN apt-get -y autoremove",
         "RUN rm -rf /var/lib/apt/lists/*",
+        "RUN rm -rf /tmp/*",
+        "RUN rm -rf /var/tmp/*"
     ])
+    for _env in env:
+        dockerfile.append("ENV %s" % _env)
+    # Honour last workdir
+    if workdir:
+        dockerfile.append("WORKDIR %s" % workdir[-1])
+
+    # Add expose ports to final Dockerfile
     if expose_ports:
         dockerfile.append("EXPOSE %s" % " ".join(expose_ports))
+
     if entry_points:
         entry_point = entry_points[-1]
-        dockerfile.append("ENTRYPOINT %s" % json.dumps(entry_point))
+        scripts.append(" ".join(entry_point))
+    exec_command = 'echo -e "%s" >> /entrypoint.sh' % ("\\n".join(["#!/bin/bash"]+scripts))
+    dockerfile.append("RUN bash -c '%s'" % exec_command)
+    dockerfile.append("RUN chmod +x /entrypoint.sh")
+    dockerfile.append("ENTRYPOINT %s" % json.dumps(["/entrypoint.sh"]))
     
-    dockerfile = "\n".join(dockerfile)
+    dockerfile = "\n".join([base_image]+dockerfile)
     return dockerfile
 
 if __name__=="__main__":

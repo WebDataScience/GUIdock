@@ -1,0 +1,6 @@
+{
+   "maintainer": "Somebody <somebody@acme.com>",
+   "libs": [
+       "mongodb"
+   ]
+}

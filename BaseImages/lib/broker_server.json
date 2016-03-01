@@ -1,0 +1,21 @@
+{
+   "maintainer": ["Varun Mittal <varun91@uw.edu>"],
+   "commands": [
+       ["install", "python-requests python-django python-pip build-essential python-dev"],
+       "pip install librabbitmq mongoengine Celery",
+       ["purge", "python-pip build-essential python-dev"],
+       "useradd celery",
+       ["add", "init.sh /"],
+       "chmod +x /init.sh"
+   ],
+   "depends": [
+       "broker_base"
+   ],
+   "expose": [
+      "8000"
+   ],
+   "entrypoint": [
+       "/init.sh"
+   ]   
+}
+

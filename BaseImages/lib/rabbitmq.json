@@ -1,0 +1,20 @@
+{
+   "maintainer": ["Varun Mittal <varun91@uw.edu>"],
+   "commands": [
+      ["install", "rabbitmq-server"],
+      "rabbitmq-plugins enable rabbitmq_management",
+      "echo \"[{rabbit, [{loopback_users, []}]}].\" > /etc/rabbitmq/rabbitmq.config",
+      ["add", "rabbitmq-start /usr/local/bin/"],
+      "chmod +x /usr/local/bin/rabbitmq-start"
+   ],
+   "workdir": [
+      "/data/"
+   ],
+   "env": [
+      "RABBITMQ_LOG_BASE /data/log",
+      "RABBITMQ_MNESIA_BASE /data/mnesia"
+   ],
+   "entrypoint": [
+      "/usr/local/bin/rabbitmq-start"
+   ]
+}

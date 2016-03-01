@@ -1,5 +1,5 @@
 {
-   "maintainer": "Varun Mittal <varun91@uw.edu>",
+   "maintainer": ["Varun Mittal <varun91@uw.edu>"],
    "commands": [
       ["add", "http://biolab.github.io/install-orange/setup-ubuntu.sh /data/setup-ubuntu.sh"],
       "chmod +x /data/setup-ubuntu.sh",

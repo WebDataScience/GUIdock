@@ -1,5 +1,5 @@
 {
-   "maintainer": "Varun Mittal <varun91@uw.edu>",
+   "maintainer": ["Varun Mittal <varun91@uw.edu>"],
    "commands": [
       ["add", "rserve.R /data/rserve.R"],
       ["add", "startup.sh /data/startup.sh"]

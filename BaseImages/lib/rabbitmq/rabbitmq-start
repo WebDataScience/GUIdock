@@ -1,0 +1,11 @@
+#!/bin/bash
+
+ulimit -n 10240
+chown -R rabbitmq:rabbitmq /data
+
+if [ -f /var/lib/rabbitmq/.erlang.cookie ]; then
+    chown rabbitmq:rabbitmq /var/lib/rabbitmq/.erlang.cookie
+    chmod 400 /var/lib/rabbitmq/.erlang.cookie
+fi
+
+rabbitmq-server $@
