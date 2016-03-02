@@ -1,0 +1,14 @@
+{
+   "maintainer": ["Varun Mittal <varun91@uw.edu>"],
+   "commands": [
+      ["copy", "DEMO.tar.gz /"]
+   ],
+   "env_home": "/root/",
+   "depends": [
+      "cynetwork_bma",
+      "r",
+      "novnc"
+   ],
+   "script": "init.sh"
+}
+

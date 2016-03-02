@@ -1,15 +1,13 @@
 {
    "maintainer": ["Varun Mittal <varun91@uw.edu>"],
    "commands": [
-      ["add", "rserve.R /data/rserve.R"],
-      ["add", "startup.sh /data/startup.sh"]
+      ["add", "rserve.R /root/"],
+      ["add", "packages.R /tmp/"],
+      "Rscript /tmp/packages.R"
    ],
    "env_home": "/root/",
    "depends": [
-      "cytoscape_3_3",
       "r"
    ],
-   "entrypoint": [
-      "/data/startup.sh"
-   ]
+   "script": ["init.sh", {"remove": false}]
 }
