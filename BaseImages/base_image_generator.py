@@ -16,12 +16,18 @@ command_dict = {
     "repo_add"   : ["RUN add-apt-repository -y", lambda command,arg,dep: (command,"'%s'" % arg)],
     "install"    : ["RUN apt-get install -y --force-yes --no-install-recommends", None],
     "purge"      : ["RUN apt-get purge -y --force-yes", None],
-    "add"        : ["add", process_add]
+    "add"        : ["add", process_add],
+    "copy"       : ["copy", process_add]
 }
 
 def load_dep(dep, commands=[], expose_ports=[], entry_points=[], scripts=[], env=[], workdir=[], contributors=[]):
     path = "lib/%s.json" % dep
-    json_data = load(open(path, "rb"))
+    try:
+        json_data = load(open(path, "rb"))
+    except Exception as e:
+        from sys import exit
+        print("Failed to import %s: %s" % (dep, e))
+        exit(1)
     depends   = json_data.get('depends', [])
     commands.append("#%s.json" % dep)
     for _dep in depends:
