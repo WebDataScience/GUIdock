@@ -1,7 +1,8 @@
 {
    "maintainer": ["Varun Mittal <varun91@uw.edu>"],
    "commands": [
-      ["copy", "DEMO.tar.gz /"]
+      ["copy", "DEMO.tar.gz /"],
+      ["copy", "rserve.R /deps/"]
    ],
    "env_home": "/root/",
    "depends": [
@@ -9,6 +10,6 @@
       "r",
       "novnc"
    ],
-   "script": "init.sh"
+   "script": ["init.sh", {"remove": false}]
 }
 

@@ -93,7 +93,7 @@ def load_json(json_path, dockerfile=None):
             "ENV DEBIAN_FRONTEND noninteractive",
             "ENV HOME /root",
             "RUN apt-get update",
-            "RUN apt-get install -y --force-yes --no-install-recommends software-properties-common",
+            "RUN apt-get install -y --force-yes --no-install-recommends software-properties-common apt-transport-https",
         ]
 
     sub_commands = []
