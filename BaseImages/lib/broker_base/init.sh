@@ -21,6 +21,6 @@ while getopts ":u:p:" opt; do
 done
 
 chmod +x /broker/init.sh
-/broker/init.sh
+/bin/bash -c /broker/init.sh
 
 cd /broker/ && nohup python manage.py runserver 0.0.0.0:8000 &

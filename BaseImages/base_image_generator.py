@@ -72,7 +72,7 @@ def load_dep(dep, commands=[], expose_ports=[], entry_points=[], scripts=[], env
         commands.append(command)
         command_str = "/%s" % file_name
         scripts.append("chmod +x %s" % command_str)
-        scripts.append("/bin/bash %s" % command_str)
+        scripts.append("/bin/bash %s \$@" % command_str)
         if script_opts['remove']:
             scripts.append("rm -rf %s" % command_str)
     workdir = workdir + json_data.get('workdir', [])
@@ -130,8 +130,8 @@ def load_json(json_path, dockerfile=None):
         dockerfile.append("EXPOSE %s" % " ".join(expose_ports))
 
     if entry_points:
-        entry_point = entry_points[-1]
-        scripts.append(" ".join(entry_point))
+        entry_point = "%s %s" % (" ".join(entry_points[-1]), "\$@")
+        scripts.append(entry_point)
     exec_command = 'echo -e "%s" >> /entrypoint.sh' % ("\\n".join(["#!/bin/bash"]+scripts))
     dockerfile.append("RUN bash -c '%s'" % exec_command)
     dockerfile.append("RUN chmod +x /entrypoint.sh")
