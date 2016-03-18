@@ -1,7 +1,7 @@
 {
    "maintainer": ["Varun Mittal <varun91@uw.edu>"],
    "commands": [
-       ["install", "python-django python-pip build-essential python-dev"],
+       ["install", "python-django python-pip build-essential python-dev python-oauth2 python-googleapi"],
        "pip install librabbitmq mongoengine",
        ["purge", "python-pip build-essential python-dev"],
        ["copy", "broker.tar.gz /"]
