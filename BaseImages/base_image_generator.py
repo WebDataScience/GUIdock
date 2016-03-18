@@ -72,7 +72,7 @@ def load_dep(dep, commands=[], expose_ports=[], entry_points=[], scripts=[], env
         commands.append(command)
         command_str = "/%s" % file_name
         scripts.append("chmod +x %s" % command_str)
-        scripts.append(command_str)
+        scripts.append("/bin/bash %s" % command_str)
         if script_opts['remove']:
             scripts.append("rm -rf %s" % command_str)
     workdir = workdir + json_data.get('workdir', [])
