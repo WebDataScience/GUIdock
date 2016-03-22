@@ -4,14 +4,18 @@ cd / && tar -xf /broker.tar.gz && rm broker.tar.gz
 chmod +x /broker/init.sh
 /bin/bash -c /broker/init.sh
 
-while getopts ":u:p:" opt; do
+while getopts ":u:p:e:" opt; do
   case $opt in
     u)
-      echo "-a was triggered, Parameter: $OPTARG" >&2
+      echo "-u was triggered, Parameter: $OPTARG" >&2
       echo $OPTARG >  /google_cred
       ;;
     p)
-      echo "-a was triggered, Parameter: $OPTARG" >&2
+      echo "-p was triggered, Parameter: $OPTARG" >&2
+      echo $OPTARG >> /google_cred
+      ;;
+    e)
+      echo "-e was triggered, Parameter: $OPTARG" >&2
       echo $OPTARG >> /google_cred
       ;;
     \?)
