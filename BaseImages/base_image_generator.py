@@ -33,7 +33,7 @@ def load_dep(dep, commands=[], expose_ports=[], entry_points=[], scripts=[], env
     commands.append("#%s.json" % dep)
     for _dep in depends:
         load_dep(_dep, commands, scripts=scripts, env=env, install_packages=install_packages, purge_packages=purge_packages, 
-                     add_repos=add_repos, entry_points=entry_points)
+                     add_repos=add_repos, entry_points=entry_points, expose_ports=expose_ports)
     for command in json_data['commands']:
         try:
             command,arg = command
