@@ -2,7 +2,6 @@
    "maintainer": ["Varun Mittal <varun91@uw.edu>"],
    "commands": [
       ["repo_add", "ppa:openjdk-r/ppa"],
-      "repo_update",
       ["install", "openjdk-8-jre"]
    ],
    "env_home": "/root/"

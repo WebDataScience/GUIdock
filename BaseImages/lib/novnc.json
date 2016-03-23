@@ -2,7 +2,6 @@
    "maintainer": ["Varun Mittal <varun91@uw.edu>"],
    "commands": [
       ["repo_add", "ppa:nginx/stable"],
-      "repo_update",
       ["install", "supervisor openssh-server pwgen sudo vim-tiny"],
       ["install", "net-tools lxde x11vnc x11vnc-data xvfb"],
       ["install", "gtk2-engines-murrine ttf-ubuntu-font-family"],
