@@ -25,5 +25,7 @@ while getopts ":u:p:e:" opt; do
   esac
 done
 
-cd /broker && python manage.py syncdb --noinput
+if [ ! -e /broker/db.sqlite3 ]; then
+  cd /broker && python manage.py syncdb --noinput
+fi
 cd /broker/ && nohup python manage.py runserver 0.0.0.0:8000 &
