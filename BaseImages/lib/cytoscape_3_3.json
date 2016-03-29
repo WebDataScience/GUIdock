@@ -1,7 +1,8 @@
 {
    "maintainer": ["Varun Mittal <varun91@uw.edu>"],
    "commands": [
-      ["add", "http://chianti.ucsd.edu/cytoscape-3.3.0/cytoscape-3.3.0.tar.gz /deps/cytoscape-3.3.0.tar.gz"]
+      ["add", "http://chianti.ucsd.edu/cytoscape-3.3.0/cytoscape-3.3.0.tar.gz /deps/cytoscape-3.3.0.tar.gz"],
+      ["add", "cytoscape.desktop /usr/share/applications/cytoscape.desktop"]
    ],
    "env_home": "/root/",
    "depends": [

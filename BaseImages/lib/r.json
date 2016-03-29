@@ -4,13 +4,12 @@
       ["install", "apt-transport-https"],
       ["repo_add", "deb https://cran.rstudio.com/bin/linux/ubuntu/ trusty/"],
       "apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9",
-      "repo_update",
       ["install", "r-base-dev"],
       ["add", "deps.R /tmp/deps.R"],
       "Rscript /tmp/deps.R",
       "rm /tmp/deps.R",
       ["install", "r-base"],
-      ["purge", "apt-transport-https r-base-dev"]
+      ["purge", "r-base-dev"]
    ],
    "env_home": "/root/"
 }

@@ -12,7 +12,7 @@ def process_add(command, arg, dep):
     return command,arg
 
 command_dict = {
-    "repo_update": ["RUN apt-get -y update", None],
+    "repo_update": ["RUN apt-get -y update --allow-unauthenticated", None],
     "repo_add"   : ["RUN add-apt-repository -y", lambda command,arg,dep: (command,"'%s'" % arg)],
     "install"    : ["RUN apt-get install -y --force-yes --no-install-recommends", None],
     "purge"      : ["RUN apt-get purge -y --force-yes", None],
@@ -20,7 +20,8 @@ command_dict = {
     "copy"       : ["copy", process_add]
 }
 
-def load_dep(dep, commands=[], expose_ports=[], entry_points=[], scripts=[], env=[], workdir=[], contributors=[]):
+def load_dep(dep, commands=[], expose_ports=[], entry_points=[], scripts=[], env=[], workdir=[], contributors=[], maintainers=[],
+                 add_repos=[], install_packages=[], purge_packages=[]):
     path = "lib/%s.json" % dep
     try:
         json_data = load(open(path, "rb"))
@@ -31,19 +32,30 @@ def load_dep(dep, commands=[], expose_ports=[], entry_points=[], scripts=[], env
     depends   = json_data.get('depends', [])
     commands.append("#%s.json" % dep)
     for _dep in depends:
-        load_dep(_dep, commands, scripts=scripts, env=env)
+        load_dep(_dep, commands, scripts=scripts, env=env, install_packages=install_packages, purge_packages=purge_packages, 
+                     add_repos=add_repos, entry_points=entry_points, expose_ports=expose_ports)
     for command in json_data['commands']:
         try:
             command,arg = command
         except ValueError:
             arg = ""
-        command,fnc = command_dict.get(command, ["RUN %s" % command, None])
-        try:
-            command,arg = fnc(command,arg,dep)
-        except TypeError:
-            pass
-        command = "%s %s" % (command, arg)
-        commands.append(command)
+        if command == "install":
+            install_packages.extend(arg.split())
+        elif command == "purge":
+            purge_packages.extend(arg.split())
+        else:
+            # Save for matching special commands that are not to be added global list
+            orig_command = command
+            command,fnc = command_dict.get(command, ["RUN %s" % command, None])
+            try:
+                command,arg = fnc(command,arg,dep)
+            except TypeError:
+                pass
+            command = "%s %s" % (command, arg)
+            if orig_command == "repo_add":
+                add_repos.append(command)
+            else:
+                commands.append(command)
     commands.append("#--")
 
     expose = json_data.get('expose', [])
@@ -72,7 +84,7 @@ def load_dep(dep, commands=[], expose_ports=[], entry_points=[], scripts=[], env
         commands.append(command)
         command_str = "/%s" % file_name
         scripts.append("chmod +x %s" % command_str)
-        scripts.append(command_str)
+        scripts.append("/bin/bash %s \$@" % command_str)
         if script_opts['remove']:
             scripts.append("rm -rf %s" % command_str)
     workdir = workdir + json_data.get('workdir', [])
@@ -96,6 +108,7 @@ def load_json(json_path, dockerfile=None):
             "RUN apt-get install -y --force-yes --no-install-recommends software-properties-common apt-transport-https",
         ]
 
+    # Collect local variables from all components and create a central list of commands
     sub_commands = []
     expose_ports = []
     entry_points = []
@@ -103,14 +116,31 @@ def load_json(json_path, dockerfile=None):
     env          = []
     workdir      = []
     maintainers  = []
+    add_repos    = []
+    install_packages = []
+    purge_packages   = []
     for lib in data.get('libs', []):
-        sub_commands,expose_ports,entry_points,scripts,env,workdir,maintainers = load_dep(lib)
-    # Add all the maintainers collected from scripts
+        load_dep(lib, expose_ports=expose_ports, entry_points=entry_points, scripts=scripts, env=env, workdir=workdir,
+                     maintainers=maintainers, add_repos=add_repos, commands=sub_commands,
+                     install_packages=install_packages, purge_packages=purge_packages)
+
+    # aggregate repo additions
+    dockerfile.extend(add_repos)
+    dockerfile.append(command_dict['repo_update'][0])
+
+    # aggregate install commands
+    command,fnc = command_dict['install']
+    dockerfile.append("%s %s" % (command," ".join(install_packages)))
 
     for maintainer in set(maintainers):
         dockerfile = ["MAINTAINER %s" % maintainer]+dockerfile
 
     dockerfile.extend(sub_commands)
+
+    # aggregate purge commands
+    command,fnc = command_dict['purge']
+    dockerfile.append("%s %s" % (command," ".join(purge_packages)))
+
     dockerfile.extend([
         "RUN apt-get purge software-properties-common -y --force-yes",
         "RUN apt-get -y autoclean",
@@ -119,6 +149,7 @@ def load_json(json_path, dockerfile=None):
         "RUN rm -rf /tmp/*",
         "RUN rm -rf /var/tmp/*"
     ])
+
     for _env in env:
         dockerfile.append("ENV %s" % _env)
     # Honour last workdir
@@ -130,8 +161,8 @@ def load_json(json_path, dockerfile=None):
         dockerfile.append("EXPOSE %s" % " ".join(expose_ports))
 
     if entry_points:
-        entry_point = entry_points[-1]
-        scripts.append(" ".join(entry_point))
+        entry_point = "%s %s" % (" ".join(entry_points[-1]), "\$@")
+        scripts.append(entry_point)
     exec_command = 'echo -e "%s" >> /entrypoint.sh' % ("\\n".join(["#!/bin/bash"]+scripts))
     dockerfile.append("RUN bash -c '%s'" % exec_command)
     dockerfile.append("RUN chmod +x /entrypoint.sh")

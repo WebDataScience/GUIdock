@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=Cytoscape
+Name[en_US]=Cytoscape
+Exec=lxterminal -e '/deps/cytoscape-unix-3.3.0/cytoscape.sh'
+Comment[en_US]=Cytoscape
+StartupNotify=true
+
