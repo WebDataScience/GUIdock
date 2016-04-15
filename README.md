@@ -1,4 +1,4 @@
-![alt GUIdock Logo](logo.png)
+![alt GUIdock Logo](https://raw.githubusercontent.com/kristiyanto/GUIdock/master/logo.png)
 
 GUIdock: Using Docker containers with a common graphics user interface to address the reproducibility of research
 =======
@@ -13,7 +13,7 @@ Source code, installation and running script, and Dockerfile available at:
 The package contains: Cytoscape, R, with Bioconductor packages (igraph, Rserve, and networkBMA). 
 
 Demonstration video (for Linux, Mac, and Windows)   
-[![Demo Video](demo.png)](https://youtu.be/Te1yC_AkvzQ)
+[![Demo Video](https://raw.githubusercontent.com/kristiyanto/GUIdock/master/demo.png)](https://youtu.be/Te1yC_AkvzQ)
 
 
 Publication
